@@ -1,0 +1,14 @@
+body {
+	background: #424242;
+	background-size: 100%;
+}
+
+.hidden {
+	display: none;
+}
+
+#weather-main {
+	background: #fff;
+	width: 25%;
+	height: 75%;
+}
