@@ -1,15 +1,19 @@
+//To do: (1) Display error message if using Chrome (can I make it display with a certain version?)
+//https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only?hl=en
+//(2) Load a UI on page load that says something like "searching for information..."
+
+
 $(document).ready(function() {
 
 	//Switch to all jQuery later
 	var weatherStuff = document.getElementById('weather');
-	var msg = 'Geolocation data is not supported in your browser.';
 
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(success, fail);
-		weatherStuff.textContent = 'Looking for location';
-	} else {
+		weatherStuff.textContent = 'Looking for location...';
+	} /*else {
 		$('#weather').textContent = msg;
-	}
+	}*/
 
 	function success(position) {
 
@@ -27,7 +31,7 @@ $(document).ready(function() {
 			var fahrenheit = Math.round(tempInKelvin * 1.8 - 459.67);
 			var weatherCondition = data.weather[0].id;
 
-			console.log('Weather Condition: ' + weatherCondition);
+			$('#weather-main').children().removeClass('hidden');
 
 			//if in the US, automatically display Fahrenheit (can be modified to include the few other places that use F)
 			if (data.sys.country === 'US') {
@@ -80,8 +84,17 @@ $(document).ready(function() {
 
 //find a way to get this working
 	function fail(msg) {
-		$('#weather').textContent = msg;
-		console.log(msg.code);
+		$('#weather').text(msg.message + ' Try using another browser that supports geolocation data over non-HTTPS connections, or enter your zip code below (US only):');
+		$('#form').removeClass('hidden-form');
+		$('#submit').click(function() {
+			var zipCode = $('#zip').val();
+			//make sure only 5 digits entered
+			//make sure no non-numeric characters entered
+			//make sure text input not empty
+			var url = 'http://api.openweathermap.org/data/2.5/weather?appid=bf1b5eaa823ec33bb62dc1c9c72fe979&zip=' + zipCode;
+			//URL is working, now turn components from success function into reusable code to be used here too
+		})
+		console.log(msg.code); //account for other message codes at some point
 	}
 
 })

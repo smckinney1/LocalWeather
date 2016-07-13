@@ -9,10 +9,16 @@
 	
 	<div id="weather-main">
 		<h1>Local Weather App</h1>
-		<img id="icon" src="#">
-		<h2 id="temp"></h2>
+		<img id="icon" src="#" class="hidden">
+		<h2 class="hidden" id="temp"></h2>
 		<div id="weather"></div>
-		<div id="city"></div>
+
+		<div class="hidden-form" id="form">
+			<form><input id="zip" type="text" placeholder="ZIP code"><input id="submit" type="button" value="Submit"></form>
+		</div>
+
+		<!--<input-type="text">-->
+		<div class="hidden" id="city"></div>
 		<button id="fahrenheit-btn">F</button>
 		<button id="celsius-btn">C</button>
 	</div>
