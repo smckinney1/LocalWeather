@@ -9,6 +9,7 @@ body {
 
 #weather-main {
 	background: #fff;
-	width: 25%;
-	height: 75%;
+	opacity: 0.5;	/*Play around with this*/
+	width: 400px;
+	height: 300px;
 }

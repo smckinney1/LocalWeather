@@ -26,16 +26,23 @@ function getPosition_Fail(msg) {
 	$('#weather').text(msg.message + ' Try using another browser that supports geolocation data over non-HTTPS connections, or enter your zip code below (US only):');
 	$('#form').removeClass('hidden-form');
 	$('#submit').click(function() {
-		var zipCode = $('#zip').val();
+		var zipCodeVal = $('#zip').val();
 		//make sure only 5 digits entered
 		//make sure no non-numeric characters entered
 		//make sure text input not empty
-		var url = 'http://api.openweathermap.org/data/2.5/weather?appid=bf1b5eaa823ec33bb62dc1c9c72fe979&zip=' + zipCode;
-		getJSON(url);
-		$('#form').addClass('hidden-form');
-		//URL is working, now turn components from success function into reusable code to be used here too
+		isValidZipCode(zipCodeVal);	
 	})
 	console.log(msg.code); //account for other message codes at some point
+}
+
+function isValidZipCode(zipCodeVal) {
+	if (/^\d{5}(-\d{4})?$/.test(zipCodeVal)) {
+		var url = 'http://api.openweathermap.org/data/2.5/weather?appid=bf1b5eaa823ec33bb62dc1c9c72fe979&zip=' + zipCodeVal;
+		getJSON(url);
+		$('#form').addClass('hidden-form');
+	} else {
+		alert('Please enter a valid zip code.');	//eventually make this appear in the UI instead. For now keep as alert
+	}
 }
 
 function getJSON(url) {  
