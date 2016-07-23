@@ -1,15 +1,41 @@
 body {
-	background: #424242;
+	background: #FFB4D9 url("backgrounds/default.png");
 	background-size: 100%;
+    background-attachment: fixed;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
 }
 
 .hidden, .hidden-form {
 	display: none;
 }
 
+button {
+	border-radius: 50%;
+}
+
 #weather-main {
-	background: #fff;
-	opacity: 0.5;	/*Play around with this*/
-	width: 400px;
+	background: rgba(255, 255, 255, 0.50);
+	width: 400px;		/* make this & height responsive? */
 	height: 300px;
+	margin: auto;
+	border-radius: 5px;
+  	box-shadow: 3px 2px 15px 0px rgba(50, 50, 50, 0.75);
+	text-align: center;
+}
+
+#weather-main h1 {
+	/*text-align: center;*/
+	font-weight: 700;
+	/*border-bottom: 1px solid black;*/
+}
+
+#temp {
+	font-size: 2.5em;
+}
+
+#weather {
+	font-weight: 400;
+	text-shadow: 0 0 10px #FF12ff;
+	margin-bottom: 10px;
 }

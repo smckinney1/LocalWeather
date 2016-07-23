@@ -22,17 +22,15 @@ function getPosition_Success (position) {
 	
 }
 
+//If geolocation fails, allow user to enter zip code to get weather data
+
 function getPosition_Fail(msg) {
-	$('#weather').text(msg.message + ' Try using another browser that supports geolocation data over non-HTTPS connections, or enter your zip code below (US only):');
+	$('#weather').html('<span> Error: ' + msg.message + '<br><br> Try using another browser, or enter your zip code below (US only): </span>');
 	$('#form').removeClass('hidden-form');
 	$('#submit').click(function() {
 		var zipCodeVal = $('#zip').val();
-		//make sure only 5 digits entered
-		//make sure no non-numeric characters entered
-		//make sure text input not empty
 		isValidZipCode(zipCodeVal);	
 	})
-	console.log(msg.code); //account for other message codes at some point
 }
 
 function isValidZipCode(zipCodeVal) {
@@ -57,12 +55,13 @@ function getJSON(url) {
 		var weatherCondition = data.weather[0].id;
 
 		$('#weather-main').children().removeClass('hidden');
+		$('#weather').css('text-shadow', 'none');
 
-		//if in the US, automatically display Fahrenheit (can be modified to include the few other places that use F)
+		//if in the US, automatically display Fahrenheit (code can be modified in future to include the few other places that use F)
 		if (data.sys.country === 'US') {
-			$('#temp').text(fahrenheit + ' F'); //+ '&deg;' (how to get degrees to show up)
+			$('#temp').text(fahrenheit + ' \u00B0' + 'F'); //symbols must always be Unicode values in JS
 		} else {
-			$('#temp').text(celsius + ' C'); // + '&deg;' (how to get degrees to show up)
+			$('#temp').text(celsius + ' \u00B0' + 'C'); 
 		}
 
 		$('#weather').text(data.weather[0].main);	//inserts type of weather
@@ -74,11 +73,11 @@ function getJSON(url) {
 		switchBackground(weatherCondition);
 
 		$('#fahrenheit-btn').click(function() {
-			$('#temp').text(fahrenheit + ' F');
+			$('#temp').text(fahrenheit + ' \u00B0' + 'F');
 		})
 
 		$('#celsius-btn').click(function() {
-			$('#temp').text(celsius + ' C');
+			$('#temp').text(celsius + ' \u00B0' + 'C');
 		})
 
 	})
@@ -96,7 +95,6 @@ function switchBackground(condition) {
 		$('body').css({"background": "url(\"backgrounds/snow.jpeg\")", "background-size": "cover"});
 		break;
 	case (condition === 800 || condition === 801 || condition === 802):
-		//$('#clear').removeClass("hidden");
 		$('body').css({"background": "url(\"backgrounds/clear.jpg\")", "background-size": "cover"});
 		break;
 	case (condition === 803 || condition === 804):
