@@ -2,6 +2,8 @@
 //https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only?hl=en
 //(2) Load a UI on page load that says something like "searching for information..."
 
+var WEATHER_API_COUNTRY_CODE_UNITED_STATES = 'US';
+
 $(document).ready(function() {
 
 	if (navigator.geolocation) {
@@ -57,12 +59,29 @@ function getJSON(url) {
 		$('#weather-main').children().removeClass('hidden');
 		$('#weather').css('text-shadow', 'none');
 
-		//if in the US, automatically display Fahrenheit (code can be modified in future to include the few other places that use F)
-		if (data.sys.country === 'US') {
-			$('#temp').text(fahrenheit + ' \u00B0' + 'F'); //symbols must always be Unicode values in JS
+
+		if (data.sys.country !== WEATHER_API_COUNTRY_CODE_UNITED_STATES) {
+			$('#myonoffswitch').attr('checked', false);
+			
 		} else {
-			$('#temp').text(celsius + ' \u00B0' + 'C'); 
+			$('#temp').text(fahrenheit + ' \u00B0' + 'F'); //symbols must always be Unicode values in JS
 		}
+		
+		$('.onoffswitch-label').click(function() {
+/*			debugger;*/
+			
+			if ($('#myonoffswitch').prop('checked')) {
+				$('#temp').text(celsius + ' \u00B0' + 'C');
+			} else {
+				$('#temp').text(fahrenheit + ' \u00B0' + 'F');
+			}
+
+		})
+
+
+
+
+
 
 		$('#weather').text(data.weather[0].main);	//inserts type of weather
 		$('#city').text(data.name);					//inserts city
@@ -72,13 +91,13 @@ function getJSON(url) {
 		//Show background images based on current weather condition
 		switchBackground(weatherCondition);
 
-		$('#fahrenheit-btn').click(function() {
+/*		$('#fahrenheit-btn').click(function() {
 			$('#temp').text(fahrenheit + ' \u00B0' + 'F');
 		})
 
 		$('#celsius-btn').click(function() {
 			$('#temp').text(celsius + ' \u00B0' + 'C');
-		})
+		})*/
 
 	})
 }
